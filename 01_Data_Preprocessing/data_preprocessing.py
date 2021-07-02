@@ -3,9 +3,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+import os
 
 # Importing the dataset
-dataset = pd.read_csv('/home/abilio/repos/training/MachineLearning/ML/01_Data_Preprocessing/data/Data.csv')
+dir_path = os.path.dirname(os.path.realpath(__file__))
+dir_path = dir_path + ('data/' if dir_path.endswith('/') else '/data/') 
+dataset = pd.read_csv(dir_path + 'Data.csv')
 X = dataset.iloc[:, :-1].values
 y = dataset.iloc[:, -1].values
 print(X)

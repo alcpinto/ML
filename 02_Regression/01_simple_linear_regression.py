@@ -4,9 +4,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+import os
 
 # Importing the dataset
-dataset = pd.read_csv('/home/abilio/repos/training/MachineLearning/ML/02_Regression/data/Salary_Data.csv')
+dir_path = os.path.dirname(os.path.realpath(__file__))
+dir_path = dir_path + ('data/' if dir_path.endswith('/') else '/data/') 
+print(dir_path)
+dataset = pd.read_csv(dir_path + 'Salary_Data.csv')
 X = dataset.iloc[:, :-1].values
 y = dataset.iloc[:, -1].values
 print(X)
