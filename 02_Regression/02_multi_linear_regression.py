@@ -93,3 +93,12 @@ SL = 0.05
 X_opt = X[:, [0, 1, 2, 3, 4, 5]]
 X_Modeled = backwardElimination(X_opt, SL)
 
+# Making a single prediction 
+# (for example the profit of a startup with R&D Spend = 160000, Administration Spend = 130000, Marketing Spend = 300000 and State = 'California')
+print(regressor.predict([[1, 0, 0, 160000, 130000, 300000]]))
+
+# Getting the final linear regression equation with the values of the coefficients
+print(regressor.coef_)
+print(regressor.intercept_)
+
+# Profit = 86.6 × Dummy State 1 −873 × Dummy State 2 + 786 × Dummy State 3 + 0.773 × R&D Spend + 0.0329 × Administration + 0.0366 × Marketing Spend + 42467.53
