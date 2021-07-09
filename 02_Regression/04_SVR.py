@@ -1,4 +1,6 @@
 # Support Vector Regression
+# Good for almost datasets (linear and non-linear)
+# It is not badly affected by outliers 
 
 import numpy as np
 import matplotlib.pyplot as plt
