@@ -1,0 +1,27 @@
+https://www.qubole.com/tech-blog/boosting-parallelism-for-ml-in-python-using-scikit-learn-joblib-pyspark/
+
+
+https://stackoverflow.com/questions/2051192/what-is-a-python-egg
+
+The .egg file is a distribution format for Python packages. It’s just an alternative to a source code distribution or Windows exe. 
+But note that for pure Python, the .egg file is completely cross-platform.
+
+The .egg file itself is essentially a .zip file. If you change the extension to “zip”, you can see that it will have folders inside the archive.
+
+Also, if you have an .egg file, you can install it as a package using easy_install
+
+Example: To create an .egg file for a directory say mymath which itself may have several python scripts, do the following step:
+
+# setup.py
+from setuptools import setup, find_packages
+setup(
+    name = "mymath",
+    version = "0.1",
+    packages = find_packages()
+    )
+Then, from the terminal do:
+
+ $ python setup.py bdist_egg
+This will generate lot of outputs, but when it’s completed you’ll see that you have three new folders: build, dist, and mymath.egg-info. 
+The only folder that we care about is the dist folder where you'll find your .egg file, mymath-0.1-py3.5.egg with 
+your default python (installation) version number(mine here: 3.5)
