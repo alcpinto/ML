@@ -1,4 +1,4 @@
-# Naive Bayes Classification
+# Decision Tree Classification
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -22,11 +22,10 @@ sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
 
-# Traning the Naive Bayes model on the Training 
-from sklearn.naive_bayes import GaussianNB
-classifier = GaussianNB()
+# Traning the Decision Tree model on the Training
+from sklearn.tree import DecisionTreeClassifier
+classifier = DecisionTreeClassifier(criterion = 'entropy')
 classifier.fit(X_train, y_train)
-
 
 # Predicting a new result [30, 87000]
 single_pred = classifier.predict(sc.transform([[30, 87000]]))
@@ -34,13 +33,14 @@ print(single_pred)
 
 # Predicting the Test set results
 y_pred = classifier.predict(X_test)
-print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.reshape(len(y_test), 1)), axis=1))
+print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.reshape(len(y_test), 1)), axis = 1))
 
 # Making the Confusion Matrix 
 from sklearn.metrics import confusion_matrix, accuracy_score
 cm = confusion_matrix(y_test, y_pred)
 print(cm)
 print(accuracy_score(y_test, y_pred))
+
 
 # Visualising the Training set results
 from matplotlib.colors import ListedColormap
