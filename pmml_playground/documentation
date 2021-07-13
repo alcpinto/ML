@@ -1,0 +1,62 @@
+https://stackoverflow.com/questions/33221331/export-python-scikit-learn-models-into-pmml
+
+Nyoka is a python library having support for Scikit-learn, XGBoost, LightGBM, Keras and Statsmodels.
+
+Besides about 500 Python classes which each cover a PMML tag and all constructor parameters/attributes as defined in the standard, Nyoka also provides an increasing number of convenience classes and functions that make the Data Scientist’s life easier for example by reading or writing any PMML file in one line of code from within your favorite Python environment.
+
+It can be installed from PyPi using :
+
+pip install nyoka
+
+Example code
+
+Example 1
+
+import pandas as pd
+from sklearn import datasets
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler, Imputer
+from sklearn_pandas import DataFrameMapper
+from sklearn.ensemble import RandomForestClassifier
+
+iris = datasets.load_iris()
+irisd = pd.DataFrame(iris.data, columns=iris.feature_names)
+irisd['Species'] = iris.target
+
+features = irisd.columns.drop('Species')
+target = 'Species'
+
+pipeline_obj = Pipeline([
+    ("mapping", DataFrameMapper([
+    (['sepal length (cm)', 'sepal width (cm)'], StandardScaler()) , 
+    (['petal length (cm)', 'petal width (cm)'], Imputer())
+    ])),
+    ("rfc", RandomForestClassifier(n_estimators = 100))
+])
+
+pipeline_obj.fit(irisd[features], irisd[target])
+
+from nyoka import skl_to_pmml
+
+skl_to_pmml(pipeline_obj, features, target, "rf_pmml.pmml")
+
+
+Example 2
+
+from keras import applications
+from keras.layers import Flatten, Dense
+from keras.models import Model
+
+model = applications.MobileNet(weights='imagenet', include_top=False,input_shape = (224, 224,3))
+
+activType='sigmoid'
+x = model.output
+x = Flatten()(x)
+x = Dense(1024, activation="relu")(x)
+predictions = Dense(2, activation=activType)(x)
+model_final = Model(inputs =model.input, outputs = predictions,name='predictions')
+
+from nyoka import KerasToPmml
+cnn_pmml = KerasToPmml(model_final,dataSet='image',predictedClasses=['cats','dogs'])
+
+cnn_pmml.export(open('2classMBNet.pmml', "w"), 0)
