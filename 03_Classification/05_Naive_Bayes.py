@@ -1,4 +1,4 @@
-# K-Nearest Neighbors (K-NN)
+# Naive Bayes Classification
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -14,7 +14,7 @@ y = dataset.iloc[:, -1].values
 
 # Splitting the dataset into Training set and Test set
 from sklearn.model_selection import train_test_split
-X_train,  X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
 
 # Feature Scaling
 from sklearn.preprocessing import StandardScaler
@@ -22,10 +22,11 @@ sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
 
-# Traning the K-NN on the Training set
-from sklearn.neighbors import KNeighborsClassifier
-classifier = KNeighborsClassifier(n_neighbors = 5, metric = 'minkowski', p = 2)
+# Traning the SVM model on the Training 
+from sklearn.naive_bayes import GaussianNB
+classifier = GaussianNB()
 classifier.fit(X_train, y_train)
+
 
 # Predicting a new result [30, 87000]
 single_pred = classifier.predict(sc.transform([[30, 87000]]))
@@ -74,6 +75,3 @@ plt.xlabel('Age')
 plt.ylabel('Estimated Salary')
 plt.legend()
 plt.show()
-
-
-
